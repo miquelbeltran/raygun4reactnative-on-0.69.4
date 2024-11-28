@@ -26,6 +26,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import RaygunClient from "raygun4reactnative";
+
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -58,6 +60,14 @@ const App: () => Node = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  const options = {
+    apiKey: '12345',
+    version: '0.1.2',
+  }
+
+  RaygunClient.init(options);
+  setTimeout(() => {RaygunClient.sendError("test")}, 5000);
 
   return (
     <SafeAreaView style={backgroundStyle}>
