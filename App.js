@@ -26,7 +26,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import RaygunClient from "raygun4reactnative";
+import RaygunClient, { LogLevel } from "raygun4reactnative";
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -64,9 +64,12 @@ const App: () => Node = () => {
   const options = {
     apiKey: '12345',
     version: '0.1.2',
-  }
+    enableCrashReporting: true,
+    LogLevel: LogLevel.verbose,
+  };
 
   RaygunClient.init(options);
+
   setTimeout(() => {RaygunClient.sendError("test")}, 5000);
 
   return (
